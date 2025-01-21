@@ -1,0 +1,19 @@
+on: 
+  push:
+    branches:
+      - main  # or specify the branches you want this to trigger on
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Generate SBOM
+      uses: CycloneDX/gh-python-generate-sbom@v2
+      with:
+        input: ./requirements.txt   # Corrected the file name ('requiremnts.txt' -> 'requirements.txt')
+        output: ./bom.json
+        format: json
