@@ -17,3 +17,16 @@ jobs:
         input: ./requirements.txt   # Corrected the file name ('requiremnts.txt' -> 'requirements.txt')
         output: ./bom.json
         format: json
+    - name: Upload Sbom as an artifact
+      uses: actions/upload-artfiact@v2
+      with:
+        name: SBOM
+        path: ./bom.json
+    - name: Commit Sbom to Repository
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "Github Action"
+        git add bom.json
+        git commit -m "ADD SBOM"
+        git push
+        
