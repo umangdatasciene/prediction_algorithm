@@ -14,6 +14,7 @@ jobs:
     - name: Generate SBOM
       run: |
         cyclonedx-py -r -i ./requirements.txt --format json -o ./bom.json --overwrite
+
     - name: Upload SBOM as an artifact
       uses: actions/upload-artifact@v4
       with:
