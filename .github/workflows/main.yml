@@ -1,4 +1,4 @@
-on: 
+on:
   push:
     branches:
       - main  # or specify the branches you want this to trigger on
@@ -17,16 +17,17 @@ jobs:
         input: ./requirements.txt   # Corrected the file name ('requiremnts.txt' -> 'requirements.txt')
         output: ./bom.json
         format: json
-    - name: Upload Sbom as an artifact
-      uses: actions/upload-artfiact@v2
+
+    - name: Upload SBOM as an artifact
+      uses: actions/upload-artifact@v2
       with:
         name: SBOM
         path: ./bom.json
-    - name: Commit Sbom to Repository
+
+    - name: Commit SBOM to Repository
       run: |
         git config --local user.email "action@github.com"
-        git config --local user.name "Github Action"
+        git config --local user.name "GitHub Action"
         git add bom.json
         git commit -m "ADD SBOM"
         git push
-        
