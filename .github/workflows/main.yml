@@ -12,8 +12,11 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Generate SBOM
-      run: |
-        cyclonedx-py -r -i ./requirements.txt --format json -o ./bom.json --overwrite
+      uses: CycloneDX/gh-python-generate-sbom@v2
+      with:
+        input: ./requirements.txt   # Correct input file path for your requirements.txt
+        output: ./bom.json         # Specify where to save the generated SBOM
+        format: json               # You can also specify other formats like XML
 
     - name: Upload SBOM as an artifact
       uses: actions/upload-artifact@v4
