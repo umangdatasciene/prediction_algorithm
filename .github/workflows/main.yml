@@ -1,0 +1,33 @@
+on:
+  push:
+    branches:
+      - main  # or specify the branches you want this to trigger on
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Generate SBOM
+      uses: CycloneDX/gh-python-generate-sbom@v2
+      with:
+        input: ./requirements.txt   # Correct input file path for your requirements.txt
+        output: ./bom.json         # Specify where to save the generated SBOM
+        format: json               # You can also specify other formats like XML
+
+    - name: Upload SBOM as an artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: SBOM
+        path: ./bom.json
+
+    - name: Commit SBOM to Repository
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add bom.json
+        git commit -m "ADD SBOM"
+        git push
