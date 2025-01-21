@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - main  # or specify the branches you want this to trigger on
+      - sbom  # or specify the branches you want this to trigger on
 
 jobs:
   build:
