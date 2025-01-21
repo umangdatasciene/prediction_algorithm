@@ -11,6 +11,12 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
+    - name: Remove existing bom.json (if it exists)
+      run: |
+        if [ -f ./bom.json ]; then
+          rm ./bom.json
+        fi
+
     - name: Generate SBOM
       uses: CycloneDX/gh-python-generate-sbom@v2
       with:
