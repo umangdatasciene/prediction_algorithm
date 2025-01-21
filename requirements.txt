@@ -20,9 +20,6 @@ colorama==0.4.6
 contourpy==1.2.1
 cryptography==42.0.8
 cycler==0.12.1
-cyclonedx-bom==5.1.1
-cyclonedx-py==1.0.1
-cyclonedx-python-lib==8.5.0
 defusedxml==0.7.1
 dparse==0.6.4b0
 et-xmlfile==1.1.0
