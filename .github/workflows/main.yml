@@ -38,10 +38,10 @@ jobs:
         git commit -m "ADD SBOM"
         git push
 
-    - name: Upload SBOM to Portal using curl
-      run: |
-        curl -k -X POST "http://192.168.106.77:8081/api/v1/bom" \
-          -H "Content-Type: multipart/form-data" \
-          -H "X-Api-Key: odt_eK1yFLzxS8yEWXjUL8BFuVEOURK6864a" \
-          -F "project=e23ad562-7752-48f6-9d55-330e5b9403c4" \
-          -F "bom=@./bom.json"
+    #- name: Upload SBOM to Portal using curl
+      #run: |
+        #curl -k -X POST "http://192.168.106.77:8081/api/v1/bom" \
+          #-H "Content-Type: multipart/form-data" \
+          #-H "X-Api-Key: odt_eK1yFLzxS8yEWXjUL8BFuVEOURK6864a" \
+          #-F "project=e23ad562-7752-48f6-9d55-330e5b9403c4" \
+          #-F "bom=@./bom.json"
