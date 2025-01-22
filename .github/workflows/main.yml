@@ -21,14 +21,14 @@ jobs:
       uses: CycloneDX/gh-python-generate-sbom@v2
       with:
         input: ./requirements.txt   # Correct input file path for your requirements.txt
-        output: ./bom.json         # Specify where to save the generated SBOM
-        format: json               # You can also specify other formats like XML
+        output: ./bom.xml         # Specify where to save the generated SBOM
+        format: xml               # You can also specify other formats like XML
 
     - name: Upload SBOM as an artifact
       uses: actions/upload-artifact@v4
       with:
         name: SBOM
-        path: ./bom.json
+        path: ./bom.xml
 
     - name: Commit SBOM to Repository
       run: |
