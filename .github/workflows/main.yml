@@ -1,7 +1,13 @@
+name: Generate SBOM and Upload
+
 on:
+  # Trigger on push to the main branch
   push:
     branches:
-      - main  # or specify the branches you want this to trigger on
+      - main
+
+  # Allow manual triggering through the GitHub API or UI
+  workflow_dispatch:
 
 jobs:
   build:
@@ -37,11 +43,3 @@ jobs:
         git add bom.json
         git commit -m "ADD SBOM"
         git push
-
-    - name: Upload SBOM to Portal using curl
-      run: |
-        curl -k -X POST "https://sbom.tssconsultancy.com:8083/api/v1/bom" \
-          -H "Content-Type: multipart/form-data" \
-          -H "X-Api-Key: odt_eK1yFLzxS8yEWXjUL8BFuVEOURK6864a" \
-          -F "project=e23ad562-7752-48f6-9d55-330e5b9403c4" \
-          -F "bom=@./bom.json"
