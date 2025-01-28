@@ -27,22 +27,20 @@ jobs:
           pip install -r requirements.txt
         fi
 
-    - name: Remove existing bom.json (if it exists)
-      run: |
-        if [ -f ./requirements.txt ]; then
-          rm ./requirements.txt
-        fi
-
     - name: Regenerate requirements.txt
       run: |
         pip freeze > requirements.txt  # Regenerate the requirements.txt file
 
+    - name: Check if requirements.txt has changed
+      run: |
+        git diff --exit-code requirements.txt || echo "requirements.txt has changed"
+
     - name: Commit updated requirements.txt to Repository
       run: |
-        git config --local user.email "umangstudy2023@gmail.com"
-        git config --local user.name "umangdatascienece"
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
         git add requirements.txt
-        git commit -m "Update requirements.txt"
+        git diff --cached --quiet || git commit -m "Update requirements.txt"
         git push
 
     - name: Remove existing bom.json (if it exists)
@@ -69,5 +67,5 @@ jobs:
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git add bom.json
-        git commit -m "Add SBOM"
+        git diff --cached --quiet || git commit -m "Add SBOM"
         git push
