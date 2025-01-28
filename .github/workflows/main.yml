@@ -27,6 +27,12 @@ jobs:
           pip install -r requirements.txt
         fi
 
+    - name: Remove existing bom.json (if it exists)
+      run: |
+        if [ -f ./requirements.txt ]; then
+          rm ./requirements.txt
+        fi
+
     - name: Regenerate requirements.txt
       run: |
         pip freeze > requirements.txt  # Regenerate the requirements.txt file
