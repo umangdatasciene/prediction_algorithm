@@ -19,9 +19,17 @@ jobs:
       with:
         python-version: '3.x'
 
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        # Install dependencies from existing requirements.txt, if present
+        if [ -f requirements.txt ]; then
+          pip install -r requirements.txt
+        fi
+
     - name: Regenerate requirements.txt
       run: |
-        pip freeze > requirements.txt  # Regenerate the requirements.txt file
+        pip freeze > requirements.txt  # Now that dependencies are installed, regenerate the requirements.txt
 
     - name: Remove existing bom.json (if it exists)
       run: |
