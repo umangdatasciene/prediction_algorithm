@@ -1,12 +1,9 @@
 name: Generate SBOM and Upload
 
 on:
-  # Trigger on push to the main branch
   push:
     branches:
       - main
-
-  # Allow manual triggering through the GitHub API or UI
   workflow_dispatch:
 
 jobs:
@@ -20,16 +17,11 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: '3.x'  # Set the version of Python as needed
+        python-version: '3.x'
 
-    - name: Install dependencies
+    - name: Regenerate requirements.txt
       run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt  # Install any existing dependencies if available
-
-    - name: Generate requirements.txt
-      run: |
-        pip freeze > requirements.txt  # Generate the requirements.txt using pip freeze
+        pip freeze > requirements.txt  # Regenerate the requirements.txt file
 
     - name: Remove existing bom.json (if it exists)
       run: |
@@ -40,8 +32,8 @@ jobs:
     - name: Generate SBOM
       uses: CycloneDX/gh-python-generate-sbom@v2
       with:
-        input: ./requirements.txt   # Correct input file path for your requirements.txt
-        output: ./bom.json         # Specify where to save the generated SBOM
+        input: ./requirements.txt   # Input the latest requirements.txt
+        output: ./bom.json         # Specify where to save the SBOM
         format: json               # You can also specify other formats like XML
 
     - name: Upload SBOM as an artifact
@@ -50,10 +42,10 @@ jobs:
         name: SBOM
         path: ./bom.json
 
-    - name: Commit SBOM to Repository
+    - name: Commit updated requirements.txt and SBOM to Repository
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        git add bom.json
-        git commit -m "ADD SBOM"
+        git add requirements.txt bom.json
+        git commit -m "Update requirements.txt and add SBOM"
         git push
