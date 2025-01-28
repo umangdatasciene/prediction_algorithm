@@ -29,7 +29,15 @@ jobs:
 
     - name: Regenerate requirements.txt
       run: |
-        pip freeze > requirements.txt  # Now that dependencies are installed, regenerate the requirements.txt
+        pip freeze > requirements.txt  # Regenerate the requirements.txt file
+
+    - name: Commit updated requirements.txt to Repository
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add requirements.txt
+        git commit -m "Update requirements.txt"
+        git push
 
     - name: Remove existing bom.json (if it exists)
       run: |
@@ -50,10 +58,10 @@ jobs:
         name: SBOM
         path: ./bom.json
 
-    - name: Commit updated requirements.txt and SBOM to Repository
+    - name: Commit SBOM to Repository
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        git add requirements.txt bom.json
-        git commit -m "Update requirements.txt and add SBOM"
+        git add bom.json
+        git commit -m "Add SBOM"
         git push
